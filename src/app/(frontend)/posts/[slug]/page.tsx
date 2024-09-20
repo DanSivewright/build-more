@@ -1,17 +1,17 @@
 import type { Metadata } from 'next'
 
-import { RelatedPosts } from '@/blocks/RelatedPosts/Component'
-import { PayloadRedirects } from '@/components/PayloadRedirects'
+import { RelatedPosts } from '@/blocks/related-posts'
+import { PayloadRedirects } from '@/components/payload-redirects'
 import configPromise from '@payload-config'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 import { draftMode, headers } from 'next/headers'
 import React, { cache } from 'react'
-import RichText from '@/components/RichText'
+import RichText from '@/components/rich-text'
 
 import type { Post } from '@/payload-types'
 
-import { PostHero } from '@/heros/PostHero'
-import { generateMeta } from '@/utilities/generateMeta'
+import { PostHero } from '@/heros/post-hero'
+import { generateMeta } from '@/utilities/generate-meta'
 import PageClient from './page.client'
 
 export async function generateStaticParams() {

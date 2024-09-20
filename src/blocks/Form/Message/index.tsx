@@ -1,7 +1,7 @@
-import RichText from '@/components/RichText'
+import RichText from '@/components/rich-text'
 import React from 'react'
 
-import { Width } from '../Width'
+import { Width } from '../width'
 
 export const Message: React.FC = ({ message }: { message: Record<string, any> }) => {
   return (

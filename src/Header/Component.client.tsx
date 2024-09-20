@@ -1,13 +1,13 @@
 'use client'
-import { useHeaderTheme } from '@/providers/HeaderTheme'
+import { useHeaderTheme } from '@/providers/header-theme'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
 import type { Header } from '@/payload-types'
 
-import { Logo } from '@/components/Logo/Logo'
-import { HeaderNav } from './Nav'
+import { Logo } from '@/components/logo/Logo'
+import { HeaderNav } from './nav'
 
 interface HeaderClientProps {
   header: Header

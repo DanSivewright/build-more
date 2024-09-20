@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 
-import { PayloadRedirects } from '@/components/PayloadRedirects'
+import { PayloadRedirects } from '@/components/payload-redirects'
 import configPromise from '@payload-config'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 import { draftMode } from 'next/headers'
@@ -9,9 +9,9 @@ import { homeStatic } from '@/endpoints/seed/home-static'
 
 import type { Page as PageType } from '@/payload-types'
 
-import { RenderBlocks } from '@/blocks/RenderBlocks'
-import { RenderHero } from '@/heros/RenderHero'
-import { generateMeta } from '@/utilities/generateMeta'
+import { RenderBlocks } from '@/blocks/render-blocks'
+import { RenderHero } from '@/heros/render-hero'
+import { generateMeta } from '@/utilities/generate-meta'
 
 export async function generateStaticParams() {
   const payload = await getPayloadHMR({ config: configPromise })

@@ -5,15 +5,15 @@ import { GeistMono } from 'geist/font/mono'
 import { GeistSans } from 'geist/font/sans'
 import React from 'react'
 
-import { AdminBar } from '@/components/AdminBar'
-import { Footer } from '@/Footer/Component'
-import { Header } from '@/Header/Component'
-import { LivePreviewListener } from '@/components/LivePreviewListener'
+import { AdminBar } from '@/components/admin-bar'
+import { Footer } from '@/footer'
+import { Header } from '@/header'
+import { LivePreviewListener } from '@/components/live-preview-listener'
 import { Providers } from '@/providers'
-import { InitTheme } from '@/providers/Theme/InitTheme'
-import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
+import { mergeOpenGraph } from '@/utilities/merge-open-graph'
 import './globals.css'
 import { draftMode } from 'next/headers'
+import { InitTheme } from '@/providers/theme/init-theme'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const { isEnabled } = draftMode()

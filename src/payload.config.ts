@@ -12,25 +12,25 @@ import {
   HeadingFeature,
   ItalicFeature,
   LinkFeature,
+  UnderlineFeature,
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
-import sharp from 'sharp' // editor-import
-import { UnderlineFeature } from '@payloadcms/richtext-lexical'
 import path from 'path'
 import { buildConfig } from 'payload'
+import sharp from 'sharp' // editor-import
 import { fileURLToPath } from 'url'
 
-import Categories from './collections/Categories'
-import { Media } from './collections/Media'
-import { Pages } from './collections/Pages'
-import { Posts } from './collections/Posts'
-import Users from './collections/Users'
-import { seedHandler } from './endpoints/seedHandler'
-import { Footer } from './Footer/config'
-import { Header } from './Header/config'
-import { revalidateRedirects } from './hooks/revalidateRedirects'
 import { GenerateTitle, GenerateURL } from '@payloadcms/plugin-seo/types'
 import { Page, Post } from 'src/payload-types'
+import Categories from './collections/categories'
+import { Media } from './collections/media'
+import { Pages } from './collections/pages'
+import { Posts } from './collections/posts'
+import Users from './collections/users'
+import { seedHandler } from './endpoints/seedHandler'
+import { Footer } from './footer/config'
+import { Header } from './header/config'
+import { revalidateRedirects } from './hooks/revalidate-redirects'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -47,14 +47,14 @@ const generateURL: GenerateURL<Post | Page> = ({ doc }) => {
 
 export default buildConfig({
   admin: {
-    components: {
-      // The `BeforeLogin` component renders a message that you see while logging into your admin panel.
-      // Feel free to delete this at any time. Simply remove the line below and the import `BeforeLogin` statement on line 15.
-      beforeLogin: ['@/components/BeforeLogin'],
-      // The `BeforeDashboard` component renders the 'welcome' block that you see after logging into your admin panel.
-      // Feel free to delete this at any time. Simply remove the line below and the import `BeforeDashboard` statement on line 15.
-      beforeDashboard: ['@/components/BeforeDashboard'],
-    },
+    // components: {
+    //   // The `BeforeLogin` component renders a message that you see while logging into your admin panel.
+    //   // Feel free to delete this at any time. Simply remove the line below and the import `BeforeLogin` statement on line 15.
+    //   beforeLogin: ['@/components/BeforeLogin'],
+    //   // The `BeforeDashboard` component renders the 'welcome' block that you see after logging into your admin panel.
+    //   // Feel free to delete this at any time. Simply remove the line below and the import `BeforeDashboard` statement on line 15.
+    //   beforeDashboard: ['@/components/BeforeDashboard'],
+    // },
     importMap: {
       baseDir: path.resolve(dirname),
     },
