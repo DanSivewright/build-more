@@ -1,12 +1,17 @@
-import { BannerBlock } from '@/blocks/banner'
-import { CallToActionBlock } from '@/blocks/call-to-action'
-import { CodeBlock, CodeBlockProps } from '@/blocks/code'
-import { MediaBlock } from '@/blocks/media-block'
-import React, { Fragment, JSX } from 'react'
-import { CMSLink } from '@/components/link'
-import { DefaultNodeTypes, SerializedBlockNode } from '@payloadcms/richtext-lexical'
-import type { BannerBlock as BannerBlockProps } from '@/payload-types'
+import React, { Fragment, JSX } from "react"
+import type { BannerBlock as BannerBlockProps, Page } from "@/payload-types"
+import { BannerBlock } from "@/payload/blocks/banner"
+import { CallToActionBlock } from "@/payload/blocks/call-to-action"
+import { CodeBlock, CodeBlockProps } from "@/payload/blocks/code"
+import { MediaBlock } from "@/payload/blocks/media-block"
+import {
+  DefaultNodeTypes,
+  SerializedBlockNode,
+} from "@payloadcms/richtext-lexical"
 
+import { CMSLink } from "@/components/link"
+
+import { Title } from "../title"
 import {
   IS_BOLD,
   IS_CODE,
@@ -15,15 +20,14 @@ import {
   IS_SUBSCRIPT,
   IS_SUPERSCRIPT,
   IS_UNDERLINE,
-} from './node-format'
-import type { Page } from '@/payload-types'
+} from "./node-format"
 
 export type NodeTypes =
   | DefaultNodeTypes
   | SerializedBlockNode<
       // @ts-ignore // TODO: Fix this
-      | Extract<Page['layout'][0], { blockType: 'cta' }>
-      | Extract<Page['layout'][0], { blockType: 'mediaBlock' }>
+      | Extract<Page["layout"][0], { blockType: "cta" }>
+      | Extract<Page["layout"][0], { blockType: "mediaBlock" }>
       | BannerBlockProps
       | CodeBlockProps
     >
@@ -40,7 +44,7 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
           return null
         }
 
-        if (node.type === 'text') {
+        if (node.type === "text") {
           let text = <React.Fragment key={index}>{node.text}</React.Fragment>
           if (node.format & IS_BOLD) {
             text = <strong key={index}>{text}</strong>
@@ -50,14 +54,14 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
           }
           if (node.format & IS_STRIKETHROUGH) {
             text = (
-              <span key={index} style={{ textDecoration: 'line-through' }}>
+              <span key={index} style={{ textDecoration: "line-through" }}>
                 {text}
               </span>
             )
           }
           if (node.format & IS_UNDERLINE) {
             text = (
-              <span key={index} style={{ textDecoration: 'underline' }}>
+              <span key={index} style={{ textDecoration: "underline" }}>
                 {text}
               </span>
             )
@@ -82,9 +86,9 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
           if (node.children == null) {
             return null
           } else {
-            if (node?.type === 'list' && node?.listType === 'check') {
+            if (node?.type === "list" && node?.listType === "check") {
               for (const item of node.children) {
-                if ('checked' in item) {
+                if ("checked" in item) {
                   if (!item?.checked) {
                     item.checked = false
                   }
@@ -95,9 +99,10 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
           }
         }
 
-        const serializedChildren = 'children' in node ? serializedChildrenFn(node) : ''
+        const serializedChildren =
+          "children" in node ? serializedChildrenFn(node) : ""
 
-        if (node.type === 'block') {
+        if (node.type === "block") {
           const block = node.fields
 
           const blockType = block?.blockType
@@ -107,12 +112,12 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
           }
 
           switch (blockType) {
-            case 'cta':
+            case "cta":
               return <CallToActionBlock key={index} {...block} />
-            case 'mediaBlock':
+            case "mediaBlock":
               return (
                 <MediaBlock
-                  className="col-start-1 col-span-3"
+                  className="col-span-3 col-start-1"
                   imgClassName="m-0"
                   key={index}
                   {...block}
@@ -121,34 +126,52 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
                   disableInnerContainer={true}
                 />
               )
-            case 'banner':
-              return <BannerBlock className="col-start-2 mb-4" key={index} {...block} />
-            case 'code':
-              return <CodeBlock className="col-start-2" key={index} {...block} />
+            case "banner":
+              return (
+                <BannerBlock
+                  className="col-start-2 mb-4"
+                  key={index}
+                  {...block}
+                />
+              )
+            case "code":
+              return (
+                <CodeBlock className="col-start-2" key={index} {...block} />
+              )
             default:
               return null
           }
         } else {
           switch (node.type) {
-            case 'linebreak': {
+            case "linebreak": {
               return <br className="col-start-2" key={index} />
             }
-            case 'paragraph': {
+            case "paragraph": {
               return (
                 <p className="col-start-2" key={index}>
                   {serializedChildren}
                 </p>
               )
             }
-            case 'heading': {
-              const Tag = node?.tag
+            case "heading": {
+              // const Tag = node?.tag
+              // return (
+              //   <Tag className="col-start-2" key={index}>
+              //     {serializedChildren}
+              //   </Tag>
+              // )
+              const level = node?.tag?.split("h")[1]
+
               return (
-                <Tag className="col-start-2" key={index}>
+                <Title
+                  className="col-start-2 font-normal"
+                  level={(parseInt(level) as 1 | 2 | 3 | 4 | 5 | 6) ?? 1}
+                >
                   {serializedChildren}
-                </Tag>
+                </Title>
               )
             }
-            case 'list': {
+            case "list": {
               const Tag = node?.tag
               return (
                 <Tag className="list col-start-2" key={index}>
@@ -156,12 +179,12 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
                 </Tag>
               )
             }
-            case 'listitem': {
+            case "listitem": {
               if (node?.checked != null) {
                 return (
                   <li
-                    aria-checked={node.checked ? 'true' : 'false'}
-                    className={` ${node.checked ? '' : ''}`}
+                    aria-checked={node.checked ? "true" : "false"}
+                    className={` ${node.checked ? "" : ""}`}
                     key={index}
                     // eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
                     role="checkbox"
@@ -179,14 +202,14 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
                 )
               }
             }
-            case 'quote': {
+            case "quote": {
               return (
                 <blockquote className="col-start-2" key={index}>
                   {serializedChildren}
                 </blockquote>
               )
             }
-            case 'link': {
+            case "link": {
               const fields = node.fields
 
               return (
@@ -194,7 +217,7 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
                   key={index}
                   newTab={Boolean(fields?.newTab)}
                   reference={fields.doc as any}
-                  type={fields.linkType === 'internal' ? 'reference' : 'custom'}
+                  type={fields.linkType === "internal" ? "reference" : "custom"}
                   url={fields.url}
                 >
                   {serializedChildren}

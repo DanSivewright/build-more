@@ -1,4 +1,4 @@
-import { cn } from 'src/utilities/cn'
+import { cn } from '@/lib/utils'
 import React from 'react'
 
 import type { Post } from '@/payload-types'
