@@ -1,30 +1,30 @@
-import { Button, type ButtonProps } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
-import Link from 'next/link'
-import React from 'react'
+import React from "react"
+import Link from "next/link"
+import type { Page, Post } from "@/payload-types"
 
-import type { Page, Post } from '@/payload-types'
+import { cn } from "@/lib/utils"
+import { Button, type ButtonProps } from "@/components/ui/button"
 
 type CMSLinkType = {
-  appearance?: 'inline' | ButtonProps['variant']
+  appearance?: "inline" | ButtonProps["variant"]
   children?: React.ReactNode
   className?: string
   label?: string | null
   newTab?: boolean | null
   reference?: {
-    relationTo: 'pages' | 'posts'
+    relationTo: "pages" | "posts"
     value: Page | Post | string | number
   } | null
-  size?: ButtonProps['size'] | null
-  type?: 'custom' | 'reference' | null
+  size?: ButtonProps["size"] | null
+  type?: "custom" | "reference" | null
   url?: string | null
-  rounded?: ButtonProps['rounded'] | null
+  rounded?: ButtonProps["rounded"] | null
 }
 
 export const CMSLink: React.FC<CMSLinkType> = (props) => {
   const {
     type,
-    appearance = 'inline',
+    appearance = "inline",
     children,
     className,
     label,
@@ -36,20 +36,24 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
   } = props
 
   const href =
-    type === 'reference' && typeof reference?.value === 'object' && reference.value.slug
-      ? `${reference?.relationTo !== 'pages' ? `/${reference?.relationTo}` : ''}/${
+    type === "reference" &&
+    typeof reference?.value === "object" &&
+    reference.value.slug
+      ? `${reference?.relationTo !== "pages" ? `/${reference?.relationTo}` : ""}/${
           reference.value.slug
         }`
       : url
 
   if (!href) return null
 
-  const newTabProps = newTab ? { rel: 'noopener noreferrer', target: '_blank' } : {}
+  const newTabProps = newTab
+    ? { rel: "noopener noreferrer", target: "_blank" }
+    : {}
 
   /* Ensure we don't break any styles set by richText */
-  if (appearance === 'inline') {
+  if (appearance === "inline") {
     return (
-      <Link className={cn(className)} href={href || url || ''} {...newTabProps}>
+      <Link className={cn(className)} href={href || url || ""} {...newTabProps}>
         {label && label}
         {children && children}
       </Link>
@@ -57,8 +61,14 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
   }
 
   return (
-    <Button asChild className={className} size={size} variant={appearance} rounded={rounded}>
-      <Link className={cn(className)} href={href || url || ''} {...newTabProps}>
+    <Button
+      asChild
+      className={className}
+      size={size}
+      variant={appearance}
+      rounded={rounded}
+    >
+      <Link className={cn(className)} href={href || url || ""} {...newTabProps}>
         {label && label}
         {children && children}
       </Link>
