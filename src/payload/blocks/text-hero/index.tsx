@@ -1,8 +1,8 @@
 import type { TextHeroBlock as TextHeroBlockProps } from "src/payload-types"
 
 import { cn } from "@/lib/utils"
+import { CMSLink } from "@/components/cms-link"
 import { Grid } from "@/components/grid"
-import { CMSLink } from "@/components/link"
 import RichText from "@/components/rich-text"
 import { Section } from "@/components/section"
 import { Title } from "@/components/title"

@@ -9,7 +9,8 @@ import {
   SerializedBlockNode,
 } from "@payloadcms/richtext-lexical"
 
-import { CMSLink } from "../link"
+import { CMSLink } from "@/components/cms-link"
+
 import { Title } from "../title"
 import {
   IS_BOLD,

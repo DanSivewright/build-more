@@ -1,19 +1,18 @@
-import { getCachedGlobal } from '@/lib/get-globals'
-import Link from 'next/link'
-import React from 'react'
+import React from "react"
+import Link from "next/link"
+import type { Footer } from "@/payload-types"
 
-import type { Footer } from '@/payload-types'
-
-import { CMSLink } from '@/components/link'
+import { getCachedGlobal } from "@/lib/get-globals"
+import { CMSLink } from "@/components/cms-link"
 
 export async function Footer() {
-  const footer: Footer = await getCachedGlobal('footer')()
+  const footer: Footer = await getCachedGlobal("footer")()
 
   const navItems = footer?.navItems || []
 
   return (
-    <footer className="border-t border-border bg-black dark:bg-card text-white">
-      <div className="container py-8 gap-8 flex flex-col md:flex-row md:justify-between">
+    <footer className="border-t border-border bg-black text-white dark:bg-card">
+      <div className="container flex flex-col gap-8 py-8 md:flex-row md:justify-between">
         <Link className="flex items-center" href="/">
           <picture>
             <img
@@ -24,8 +23,8 @@ export async function Footer() {
           </picture>
         </Link>
 
-        <div className="flex flex-col-reverse items-start md:flex-row gap-4 md:items-center">
-          <nav className="flex flex-col md:flex-row gap-4">
+        <div className="flex flex-col-reverse items-start gap-4 md:flex-row md:items-center">
+          <nav className="flex flex-col gap-4 md:flex-row">
             {navItems.map(({ link }, i) => {
               return <CMSLink className="text-white" key={i} {...link} />
             })}

@@ -2,8 +2,8 @@ import Image from "next/image"
 import { CallToActionImageOffsetBlock, Media } from "@/payload-types"
 
 import { cn } from "@/lib/utils"
+import { CMSLink } from "@/components/cms-link"
 import { Grid, gridVariants } from "@/components/grid"
-import { CMSLink } from "@/components/link"
 import RichText from "@/components/rich-text"
 import { Section, sectionVariants } from "@/components/section"
 
