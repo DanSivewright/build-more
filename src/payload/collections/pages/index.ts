@@ -2,6 +2,7 @@ import { Accordion } from "@/payload/blocks/accordion/config"
 import { ArchiveGrid } from "@/payload/blocks/archive-grid/config"
 import { ArchiveOffset } from "@/payload/blocks/archive-offset/config"
 import { CallToActionImageOffset } from "@/payload/blocks/call-to-action-image-offset/config"
+import { CarouselOffset } from "@/payload/blocks/carousel-offset/config"
 import { TextHero } from "@/payload/blocks/text-hero/config"
 import { slugField } from "@/payload/fields/slug"
 import { hero } from "@/payload/heros/config"
@@ -17,7 +18,6 @@ import type { CollectionConfig } from "payload"
 import { generatePreviewPath } from "../../../lib/generate-preview-path"
 import { authenticated } from "../../access/authenticated"
 import { authenticatedOrPublished } from "../../access/authenticated-or-published"
-import { Archive } from "../../blocks/archive-block/config"
 import { CallToAction } from "../../blocks/call-to-action/config"
 import { Content } from "../../blocks/content/config"
 import { FormBlock } from "../../blocks/form/config"
@@ -75,9 +75,9 @@ export const Pages: CollectionConfig = {
                 Accordion,
                 ArchiveOffset,
                 ArchiveGrid,
+                CarouselOffset,
                 Content,
                 MediaBlock,
-                Archive,
                 FormBlock,
               ],
               required: true,

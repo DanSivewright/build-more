@@ -8,6 +8,7 @@ import type {
 } from "@/payload-types"
 
 import { getCollection } from "@/lib/get-collection"
+import { dateFormatter } from "@/lib/utils"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Grid } from "@/components/grid"
 import RichText from "@/components/rich-text"
@@ -86,11 +87,11 @@ export const ArchiveGridBlock: React.FC<ArchiveGridBlockType> = async (
       <Grid>
         {collection.map((card) => {
           return (
-            <div
-              className="col-span-12 md:col-span-6 lg:col-span-4 xl:col-span-3"
+            <article
+              className="col-span-12 flex flex-col gap-2 md:col-span-6 lg:col-span-4 xl:col-span-3"
               key={card.id}
             >
-              <div className="group relative flex aspect-[7/8] w-full items-center justify-center overflow-hidden bg-accent p-8 brightness-[20%] transition-all hover:brightness-100">
+              <div className="group relative flex aspect-[7/8] w-full items-center justify-center overflow-hidden bg-accent p-8 transition-all">
                 {"meta" in card ? (
                   <Image
                     src={(card.meta?.image as Media)?.url || ""}
@@ -116,14 +117,47 @@ export const ArchiveGridBlock: React.FC<ArchiveGridBlockType> = async (
                     )}
                   </>
                 )}
-                <Title
-                  className="relative z-10 text-center text-white opacity-0 group-hover:opacity-100"
-                  level={5}
-                >
-                  {"meta" in card ? card.meta?.title : (card as User).name}
-                </Title>
               </div>
-            </div>
+
+              {"meta" in card ? (
+                <>
+                  <p className="text-xs text-muted-foreground/70">
+                    {dateFormatter(card.createdAt)} •{" "}
+                    {card.categories &&
+                    Array.isArray(card.categories) &&
+                    card.categories.length > 0
+                      ? card.categories?.map((category, i) => {
+                          // @ts-ignore
+                          const isLast = i === card?.categories?.length - 1
+                          if (typeof category === "object") {
+                            return (
+                              <React.Fragment key={i + category.title}>
+                                {category.title}
+                                {!isLast && <React.Fragment>/</React.Fragment>}
+                              </React.Fragment>
+                            )
+                          }
+                          return null
+                        })
+                      : null}
+                  </p>
+                  <Title showAs={5}>{card.title}</Title>
+                </>
+              ) : (
+                <>
+                  <p className="text-xs text-muted-foreground/70">
+                    Joined {dateFormatter(card.createdAt)}
+                  </p>
+                  <Title
+                    className="line-clamp-2"
+                    style={{ margin: 0 }}
+                    level={5}
+                  >
+                    {(card as User).name}
+                  </Title>
+                </>
+              )}
+            </article>
           )
         })}
       </Grid>

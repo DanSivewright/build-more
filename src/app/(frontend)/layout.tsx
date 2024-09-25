@@ -1,37 +1,43 @@
-import { Toaster } from '@/components/ui/toaster'
-import { createPage } from '@/lib/create-page'
-import { LivePreviewListener } from '@/components/live-preview-listener'
-import { ThemeProvider } from '@/components/providers/theme-provider'
+import { Unbounded } from "next/font/google"
 
-import { Unbounded } from 'next/font/google'
+import { createPage } from "@/lib/create-page"
+import { Toaster } from "@/components/ui/toaster"
+import { LivePreviewListener } from "@/components/live-preview-listener"
+import { ThemeProvider } from "@/components/providers/theme-provider"
 
-import './globals.css'
-import { draftMode } from 'next/headers'
-import { AdminBar } from '@/components/admin-bar'
-import { mergeOpenGraph } from '@/lib/merge-open-graph'
-import { cn } from '@/lib/utils'
-import { TailwindIndicator } from '@/components/tailwind-indicator'
+import "./globals.css"
+
+import { draftMode } from "next/headers"
+
+import { mergeOpenGraph } from "@/lib/merge-open-graph"
+import { cn } from "@/lib/utils"
+import { AdminBar } from "@/components/admin-bar"
+import { TailwindIndicator } from "@/components/tailwind-indicator"
 
 const unbounded = Unbounded({
-  subsets: ['latin'],
-  variable: '--font-unbounded',
+  subsets: ["latin"],
+  variable: "--font-unbounded",
 })
 
-const { Page, generateMetaData } = createPage({
-  metadata: async () => {
-    return {
-      metadataBase: new URL(process.env.NEXT_PUBLIC_SERVER_URL as string),
-      openGraph: mergeOpenGraph(),
-      twitter: {
-        card: 'summary_large_image',
-        creator: '@ItsDaaaaniel',
-      },
-    }
-  },
+const { Page } = createPage({
+  // metadata: async () => {
+  //   return {
+  //     metadataBase: new URL(process.env.NEXT_PUBLIC_SERVER_URL as string),
+  //     openGraph: mergeOpenGraph(),
+  //     twitter: {
+  //       card: 'summary_large_image',
+  //       creator: '@ItsDaaaaniel',
+  //     },
+  //   }
+  // },
   component: ({ children }) => {
     const { isEnabled } = draftMode()
     return (
-      <html className={cn(unbounded.variable, 'font-sans')} suppressHydrationWarning lang="en">
+      <html
+        className={cn(unbounded.variable, "font-sans")}
+        suppressHydrationWarning
+        lang="en"
+      >
         <body>
           <ThemeProvider
             attribute="class"
@@ -39,7 +45,7 @@ const { Page, generateMetaData } = createPage({
             enableSystem
             disableTransitionOnChange
           >
-            <main className="relative flex flex-col min-h-screen">
+            <main className="relative flex min-h-screen flex-col">
               <AdminBar
                 adminBarProps={{
                   preview: isEnabled,
@@ -56,8 +62,6 @@ const { Page, generateMetaData } = createPage({
     )
   },
 })
-
-export { generateMetaData }
 
 export default Page
 

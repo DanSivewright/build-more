@@ -3,8 +3,9 @@ import type { StaticImageData } from "next/image"
 import type { Page } from "@/payload-types"
 
 import { cn } from "@/lib/utils"
-import { Media } from "@/components/media"
 import RichText from "@/components/rich-text"
+
+import { Media } from "../../../components/media"
 
 type Props = Extract<Page["layout"][0], { blockType: "mediaBlock" }> & {
   breakout?: boolean

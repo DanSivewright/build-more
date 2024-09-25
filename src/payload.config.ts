@@ -1,42 +1,44 @@
 // storage-adapter-import-placeholder
-import { mongooseAdapter } from '@payloadcms/db-mongodb'
-
-import { payloadCloudPlugin } from '@payloadcms/plugin-cloud'
-import { formBuilderPlugin } from '@payloadcms/plugin-form-builder'
-import { nestedDocsPlugin } from '@payloadcms/plugin-nested-docs'
-import { redirectsPlugin } from '@payloadcms/plugin-redirects'
-import { seoPlugin } from '@payloadcms/plugin-seo'
+import path from "path"
+import { fileURLToPath } from "url"
+import { mongooseAdapter } from "@payloadcms/db-mongodb"
+import { payloadCloudPlugin } from "@payloadcms/plugin-cloud"
+import { formBuilderPlugin } from "@payloadcms/plugin-form-builder"
+import { nestedDocsPlugin } from "@payloadcms/plugin-nested-docs"
+import { redirectsPlugin } from "@payloadcms/plugin-redirects"
+import { seoPlugin } from "@payloadcms/plugin-seo"
+import { GenerateTitle, GenerateURL } from "@payloadcms/plugin-seo/types"
 import {
   BoldFeature,
   FixedToolbarFeature,
   HeadingFeature,
   ItalicFeature,
+  lexicalEditor,
   LinkFeature,
   UnderlineFeature,
-  lexicalEditor,
-} from '@payloadcms/richtext-lexical'
-import path from 'path'
-import { buildConfig } from 'payload'
-import sharp from 'sharp' // editor-import
-import { fileURLToPath } from 'url'
+} from "@payloadcms/richtext-lexical"
+import { buildConfig } from "payload"
+import sharp from "sharp" // editor-import
 
-import { GenerateTitle, GenerateURL } from '@payloadcms/plugin-seo/types'
-import { Page, Post } from 'src/payload-types'
-import Categories from './payload/collections/categories'
-import { Media } from './payload/collections/media'
-import { Pages } from './payload/collections/pages'
-import { Posts } from './payload/collections/posts'
-import Users from './payload/collections/users'
-import { seedHandler } from './payload/endpoints/seedHandler'
-import { Footer } from './payload/footer/config'
-import { Header } from './payload/header/config'
-import { revalidateRedirects } from './payload/hooks/revalidate-redirects'
+import { Page, Post } from "src/payload-types"
+
+import Categories from "./payload/collections/categories"
+import { Media } from "./payload/collections/media"
+import { Pages } from "./payload/collections/pages"
+import { Posts } from "./payload/collections/posts"
+import Users from "./payload/collections/users"
+import { seedHandler } from "./payload/endpoints/seedHandler"
+import { Footer } from "./payload/footer/config"
+import { Header } from "./payload/header/config"
+import { revalidateRedirects } from "./payload/hooks/revalidate-redirects"
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 const generateTitle: GenerateTitle<Post | Page> = ({ doc }) => {
-  return doc?.title ? `${doc.title} | Payload Website Template` : 'Payload Website Template'
+  return doc?.title
+    ? `${doc.title} | Payload Website Template`
+    : "Payload Website Template"
 }
 
 const generateURL: GenerateURL<Post | Page> = ({ doc }) => {
@@ -62,20 +64,20 @@ export default buildConfig({
     livePreview: {
       breakpoints: [
         {
-          label: 'Mobile',
-          name: 'mobile',
+          label: "Mobile",
+          name: "mobile",
           width: 375,
           height: 667,
         },
         {
-          label: 'Tablet',
-          name: 'tablet',
+          label: "Tablet",
+          name: "tablet",
           width: 768,
           height: 1024,
         },
         {
-          label: 'Desktop',
-          name: 'desktop',
+          label: "Desktop",
+          name: "desktop",
           width: 1440,
           height: 900,
         },
@@ -84,28 +86,27 @@ export default buildConfig({
   },
   // This config helps us configure global or default features that the other editors can inherit
   editor: lexicalEditor({
-    features: () => {
+    features: ({ defaultFeatures, rootFeatures }) => {
       return [
-        UnderlineFeature(),
-        BoldFeature(),
-        ItalicFeature(),
+        ...defaultFeatures,
+        ...rootFeatures,
         LinkFeature({
-          enabledCollections: ['pages', 'posts'],
+          enabledCollections: ["pages", "posts"],
           fields: ({ defaultFields }) => {
             const defaultFieldsWithoutUrl = defaultFields.filter((field) => {
-              if ('name' in field && field.name === 'url') return false
+              if ("name" in field && field.name === "url") return false
               return true
             })
 
             return [
               ...defaultFieldsWithoutUrl,
               {
-                name: 'url',
-                type: 'text',
+                name: "url",
+                type: "text",
                 admin: {
-                  condition: ({ linkType }) => linkType !== 'internal',
+                  condition: ({ linkType }) => linkType !== "internal",
                 },
-                label: ({ t }) => t('fields:enterURL'),
+                label: ({ t }) => t("fields:enterURL"),
                 required: true,
               },
             ]
@@ -115,33 +116,34 @@ export default buildConfig({
     },
   }),
   db: mongooseAdapter({
-    url: process.env.DATABASE_URI || '',
+    url: process.env.DATABASE_URI || "",
   }),
   collections: [Pages, Posts, Media, Categories, Users],
-  cors: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ''].filter(Boolean),
-  csrf: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ''].filter(Boolean),
+  cors: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ""].filter(Boolean),
+  csrf: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ""].filter(Boolean),
   endpoints: [
     // The seed endpoint is used to populate the database with some example data
     // You should delete this endpoint before deploying your site to production
     {
       handler: seedHandler,
-      method: 'get',
-      path: '/seed',
+      method: "get",
+      path: "/seed",
     },
   ],
   globals: [Header, Footer],
   plugins: [
     redirectsPlugin({
-      collections: ['pages', 'posts'],
+      collections: ["pages", "posts"],
       overrides: {
         // @ts-expect-error
         fields: ({ defaultFields }) => {
           return defaultFields.map((field) => {
-            if ('name' in field && field.name === 'from') {
+            if ("name" in field && field.name === "from") {
               return {
                 ...field,
                 admin: {
-                  description: 'You will need to rebuild the website when changing this field.',
+                  description:
+                    "You will need to rebuild the website when changing this field.",
                 },
               }
             }
@@ -154,7 +156,7 @@ export default buildConfig({
       },
     }),
     nestedDocsPlugin({
-      collections: ['categories'],
+      collections: ["categories"],
     }),
     seoPlugin({
       generateTitle,
@@ -167,7 +169,7 @@ export default buildConfig({
       formOverrides: {
         fields: ({ defaultFields }) => {
           return defaultFields.map((field) => {
-            if ('name' in field && field.name === 'confirmationMessage') {
+            if ("name" in field && field.name === "confirmationMessage") {
               return {
                 ...field,
                 editor: lexicalEditor({
@@ -175,7 +177,9 @@ export default buildConfig({
                     return [
                       ...rootFeatures,
                       FixedToolbarFeature(),
-                      HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
+                      HeadingFeature({
+                        enabledHeadingSizes: ["h1", "h2", "h3", "h4"],
+                      }),
                     ]
                   },
                 }),
@@ -191,6 +195,6 @@ export default buildConfig({
   secret: process.env.PAYLOAD_SECRET!,
   sharp,
   typescript: {
-    outputFile: path.resolve(dirname, 'payload-types.ts'),
+    outputFile: path.resolve(dirname, "payload-types.ts"),
   },
 })

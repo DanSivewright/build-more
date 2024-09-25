@@ -1,6 +1,5 @@
 import React, { Fragment } from "react"
 import type { Page } from "@/payload-types"
-import { ArchiveBlock } from "@/payload/blocks/archive-block"
 import { CallToActionBlock } from "@/payload/blocks/call-to-action"
 import { ContentBlock } from "@/payload/blocks/content"
 import { FormBlock } from "@/payload/blocks/form"
@@ -10,10 +9,10 @@ import AccordionBlock from "./accordion"
 import { ArchiveGridBlock } from "./archive-grid"
 import { ArchiveOffsetBlock } from "./archive-offset"
 import CallToActionImageOffset from "./call-to-action-image-offset"
+import CarouselOffsetBlock from "./carousel-offset"
 import TextHero from "./text-hero"
 
 const blockComponents = {
-  archive: ArchiveBlock,
   content: ContentBlock,
   cta: CallToActionBlock,
   formBlock: FormBlock,
@@ -23,6 +22,7 @@ const blockComponents = {
   accordion: AccordionBlock,
   "archive-offset": ArchiveOffsetBlock,
   "archive-grid": ArchiveGridBlock,
+  "carousel-offset": CarouselOffsetBlock,
 }
 
 export const RenderBlocks: React.FC<{
@@ -44,7 +44,6 @@ export const RenderBlocks: React.FC<{
             if (Block) {
               return (
                 <div className="my-16" key={index}>
-                  {/* @ts-expect-error */}
                   <Block {...block} />
                 </div>
               )
