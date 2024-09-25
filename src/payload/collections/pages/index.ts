@@ -1,4 +1,5 @@
 import { Accordion } from "@/payload/blocks/accordion/config"
+import { ArchiveGrid } from "@/payload/blocks/archive-grid/config"
 import { ArchiveOffset } from "@/payload/blocks/archive-offset/config"
 import { CallToActionImageOffset } from "@/payload/blocks/call-to-action-image-offset/config"
 import { TextHero } from "@/payload/blocks/text-hero/config"
@@ -73,6 +74,7 @@ export const Pages: CollectionConfig = {
                 CallToActionImageOffset,
                 Accordion,
                 ArchiveOffset,
+                ArchiveGrid,
                 Content,
                 MediaBlock,
                 Archive,

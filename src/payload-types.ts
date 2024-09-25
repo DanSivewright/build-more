@@ -106,6 +106,7 @@ export interface Page {
     | CallToActionImageOffsetBlock
     | AccordionBlock
     | ArchiveOffsetBlock
+    | ArchiveGridBlock
     | ContentBlock
     | MediaBlock
     | ArchiveBlock
@@ -224,6 +225,7 @@ export interface Media {
 export interface User {
   id: string;
   name?: string | null;
+  image?: (string | null) | Media;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -442,6 +444,46 @@ export interface ArchiveOffsetBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'archive-offset';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ArchiveGridBlock".
+ */
+export interface ArchiveGridBlock {
+  richText?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  populateBy?: ('collection' | 'selection') | null;
+  relationTo?: ('posts' | 'users') | null;
+  categories?: (string | Category)[] | null;
+  limit?: number | null;
+  selectedDocs?:
+    | (
+        | {
+            relationTo: 'posts';
+            value: string | Post;
+          }
+        | {
+            relationTo: 'users';
+            value: string | User;
+          }
+      )[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'archive-grid';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

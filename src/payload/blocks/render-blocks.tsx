@@ -7,6 +7,7 @@ import { FormBlock } from "@/payload/blocks/form"
 import { MediaBlock } from "@/payload/blocks/media-block"
 
 import AccordionBlock from "./accordion"
+import { ArchiveGridBlock } from "./archive-grid"
 import { ArchiveOffsetBlock } from "./archive-offset"
 import CallToActionImageOffset from "./call-to-action-image-offset"
 import TextHero from "./text-hero"
@@ -21,6 +22,7 @@ const blockComponents = {
   "cta-image-offset": CallToActionImageOffset,
   accordion: AccordionBlock,
   "archive-offset": ArchiveOffsetBlock,
+  "archive-grid": ArchiveGridBlock,
 }
 
 export const RenderBlocks: React.FC<{
