@@ -3,7 +3,6 @@ import type { Page } from "@/payload-types"
 import { CallToActionBlock } from "@/payload/blocks/call-to-action"
 import { ContentBlock } from "@/payload/blocks/content"
 import { FormBlock } from "@/payload/blocks/form"
-import { MediaBlock } from "@/payload/blocks/media-block"
 
 import AccordionBlock from "./accordion"
 import { ArchiveGridBlock } from "./archive-grid"
@@ -17,7 +16,6 @@ const blockComponents = {
   content: ContentBlock,
   cta: CallToActionBlock,
   formBlock: FormBlock,
-  mediaBlock: MediaBlock,
   "text-hero": TextHero,
   "cta-image-offset": CallToActionImageOffset,
   accordion: AccordionBlock,
