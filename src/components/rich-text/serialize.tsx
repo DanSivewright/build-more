@@ -3,7 +3,6 @@ import type { BannerBlock as BannerBlockProps, Page } from "@/payload-types"
 import { BannerBlock } from "@/payload/blocks/banner"
 import { CallToActionBlock } from "@/payload/blocks/call-to-action"
 import { CodeBlock, CodeBlockProps } from "@/payload/blocks/code"
-import { MediaBlock } from "@/payload/blocks/media-block"
 import {
   DefaultNodeTypes,
   SerializedBlockNode,
@@ -11,6 +10,7 @@ import {
 
 import { CMSLink } from "@/components/cms-link"
 
+import { Media } from "../media"
 import { Title } from "../title"
 import {
   IS_BOLD,
@@ -116,14 +116,14 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
               return <CallToActionBlock key={index} {...block} />
             case "mediaBlock":
               return (
-                <MediaBlock
+                <Media
                   className="col-span-3 col-start-1"
                   imgClassName="m-0"
                   key={index}
                   {...block}
-                  captionClassName="mx-auto max-w-[48rem]"
-                  enableGutter={false}
-                  disableInnerContainer={true}
+                  // captionClassName="mx-auto max-w-[48rem]"
+                  // enableGutter={false}
+                  // disableInnerContainer={true}
                 />
               )
             case "banner":
