@@ -14,7 +14,7 @@ import { Title } from "@/components/title"
 type Props = AccordionBlock
 const AccordionBlock: React.FC<Props> = ({ items, richText }) => {
   return (
-    <Section className="mx-auto flex max-w-screen-md flex-col items-center">
+    <Section className="gutter mx-auto flex max-w-screen-lg flex-col items-center">
       {richText && (
         <RichText
           enableGutter={false}
