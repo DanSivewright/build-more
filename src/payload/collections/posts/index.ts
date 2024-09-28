@@ -21,7 +21,6 @@ import { authenticated } from "../../access/authenticated"
 import { authenticatedOrPublished } from "../../access/authenticated-or-published"
 import { Banner } from "../../blocks/banner/config"
 import { Code } from "../../blocks/code/config"
-import { MediaBlock } from "../../blocks/media-block/config"
 import { populateAuthors } from "./hooks/populateAuthors"
 import { revalidatePost } from "./hooks/revalidatePost"
 
@@ -70,7 +69,7 @@ export const Posts: CollectionConfig = {
                     HeadingFeature({
                       enabledHeadingSizes: ["h1", "h2", "h3", "h4"],
                     }),
-                    BlocksFeature({ blocks: [Banner, Code, MediaBlock] }),
+                    BlocksFeature({ blocks: [Banner, Code] }),
                     FixedToolbarFeature(),
                     InlineToolbarFeature(),
                     HorizontalRuleFeature(),

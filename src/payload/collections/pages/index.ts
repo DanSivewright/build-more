@@ -21,7 +21,6 @@ import { authenticatedOrPublished } from "../../access/authenticated-or-publishe
 import { CallToAction } from "../../blocks/call-to-action/config"
 import { Content } from "../../blocks/content/config"
 import { FormBlock } from "../../blocks/form/config"
-import { MediaBlock } from "../../blocks/media-block/config"
 import { populatePublishedAt } from "../../hooks/populate-published-at"
 import { revalidatePage } from "./hooks/revalidatePage"
 
@@ -73,7 +72,6 @@ export const Pages: CollectionConfig = {
                 ArchiveGrid,
                 CarouselOffset,
                 Content,
-                MediaBlock,
                 FormBlock,
                 HeroOverlap,
               ],
