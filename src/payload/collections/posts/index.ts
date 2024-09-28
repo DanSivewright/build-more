@@ -1,5 +1,11 @@
-import type { CollectionConfig } from 'payload'
-
+import { slugField } from "@/payload/fields/slug"
+import {
+  MetaDescriptionField,
+  MetaImageField,
+  MetaTitleField,
+  OverviewField,
+  PreviewField,
+} from "@payloadcms/plugin-seo/fields"
 import {
   BlocksFeature,
   FixedToolbarFeature,
@@ -7,28 +13,20 @@ import {
   HorizontalRuleFeature,
   InlineToolbarFeature,
   lexicalEditor,
-} from '@payloadcms/richtext-lexical'
+} from "@payloadcms/richtext-lexical"
+import type { CollectionConfig } from "payload"
 
-import { authenticated } from '../../access/authenticated'
-import { authenticatedOrPublished } from '../../access/authenticated-or-published'
-import { Banner } from '../../blocks/banner/config'
-import { Code } from '../../blocks/code/config'
-import { MediaBlock } from '../../blocks/media-block/config'
-import { generatePreviewPath } from '../../../lib/generate-preview-path'
-import { populateAuthors } from './hooks/populateAuthors'
-import { revalidatePost } from './hooks/revalidatePost'
-
-import {
-  MetaDescriptionField,
-  MetaImageField,
-  MetaTitleField,
-  OverviewField,
-  PreviewField,
-} from '@payloadcms/plugin-seo/fields'
-import { slugField } from '@/payload/fields/slug'
+import { generatePreviewPath } from "../../../lib/generate-preview-path"
+import { authenticated } from "../../access/authenticated"
+import { authenticatedOrPublished } from "../../access/authenticated-or-published"
+import { Banner } from "../../blocks/banner/config"
+import { Code } from "../../blocks/code/config"
+import { MediaBlock } from "../../blocks/media-block/config"
+import { populateAuthors } from "./hooks/populateAuthors"
+import { revalidatePost } from "./hooks/revalidatePost"
 
 export const Posts: CollectionConfig = {
-  slug: 'posts',
+  slug: "posts",
   access: {
     create: authenticated,
     delete: authenticated,
@@ -36,38 +34,42 @@ export const Posts: CollectionConfig = {
     update: authenticated,
   },
   admin: {
-    defaultColumns: ['title', 'slug', 'updatedAt'],
+    defaultColumns: ["title", "slug", "updatedAt"],
     livePreview: {
       url: ({ data }) => {
         const path = generatePreviewPath({
-          path: `/posts/${typeof data?.slug === 'string' ? data.slug : ''}`,
+          path: `/posts/${typeof data?.slug === "string" ? data.slug : ""}`,
         })
         return `${process.env.NEXT_PUBLIC_SERVER_URL}${path}`
       },
     },
     preview: (doc) =>
-      generatePreviewPath({ path: `/posts/${typeof doc?.slug === 'string' ? doc.slug : ''}` }),
-    useAsTitle: 'title',
+      generatePreviewPath({
+        path: `/posts/${typeof doc?.slug === "string" ? doc.slug : ""}`,
+      }),
+    useAsTitle: "title",
   },
   fields: [
     {
-      name: 'title',
-      type: 'text',
+      name: "title",
+      type: "text",
       required: true,
     },
     {
-      type: 'tabs',
+      type: "tabs",
       tabs: [
         {
           fields: [
             {
-              name: 'content',
-              type: 'richText',
+              name: "content",
+              type: "richText",
               editor: lexicalEditor({
                 features: ({ rootFeatures }) => {
                   return [
                     ...rootFeatures,
-                    HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
+                    HeadingFeature({
+                      enabledHeadingSizes: ["h1", "h2", "h3", "h4"],
+                    }),
                     BlocksFeature({ blocks: [Banner, Code, MediaBlock] }),
                     FixedToolbarFeature(),
                     InlineToolbarFeature(),
@@ -79,15 +81,15 @@ export const Posts: CollectionConfig = {
               required: true,
             },
           ],
-          label: 'Content',
+          label: "Content",
         },
         {
           fields: [
             {
-              name: 'relatedPosts',
-              type: 'relationship',
+              name: "relatedPosts",
+              type: "relationship",
               admin: {
-                position: 'sidebar',
+                position: "sidebar",
               },
               filterOptions: ({ id }) => {
                 return {
@@ -97,34 +99,34 @@ export const Posts: CollectionConfig = {
                 }
               },
               hasMany: true,
-              relationTo: 'posts',
+              relationTo: "posts",
             },
             {
-              name: 'categories',
-              type: 'relationship',
+              name: "categories",
+              type: "relationship",
               admin: {
-                position: 'sidebar',
+                position: "sidebar",
               },
               hasMany: true,
-              relationTo: 'categories',
+              relationTo: "categories",
             },
           ],
-          label: 'Meta',
+          label: "Meta",
         },
         {
-          name: 'meta',
-          label: 'SEO',
+          name: "meta",
+          label: "SEO",
           fields: [
             OverviewField({
-              titlePath: 'meta.title',
-              descriptionPath: 'meta.description',
-              imagePath: 'meta.image',
+              titlePath: "meta.title",
+              descriptionPath: "meta.description",
+              imagePath: "meta.image",
             }),
             MetaTitleField({
               hasGenerateFn: true,
             }),
             MetaImageField({
-              relationTo: 'media',
+              relationTo: "media",
             }),
 
             MetaDescriptionField({}),
@@ -133,26 +135,26 @@ export const Posts: CollectionConfig = {
               hasGenerateFn: true,
 
               // field paths to match the target field for data
-              titlePath: 'meta.title',
-              descriptionPath: 'meta.description',
+              titlePath: "meta.title",
+              descriptionPath: "meta.description",
             }),
           ],
         },
       ],
     },
     {
-      name: 'publishedAt',
-      type: 'date',
+      name: "publishedAt",
+      type: "date",
       admin: {
         date: {
-          pickerAppearance: 'dayAndTime',
+          pickerAppearance: "dayAndTime",
         },
-        position: 'sidebar',
+        position: "sidebar",
       },
       hooks: {
         beforeChange: [
           ({ siblingData, value }) => {
-            if (siblingData._status === 'published' && !value) {
+            if (siblingData._status === "published" && !value) {
               return new Date()
             }
             return value
@@ -161,20 +163,20 @@ export const Posts: CollectionConfig = {
       },
     },
     {
-      name: 'authors',
-      type: 'relationship',
+      name: "authors",
+      type: "relationship",
       admin: {
-        position: 'sidebar',
+        position: "sidebar",
       },
       hasMany: true,
-      relationTo: 'users',
+      relationTo: "users",
     },
     // This field is only used to populate the user data via the `populateAuthors` hook
     // This is because the `user` collection has access control locked to protect user privacy
     // GraphQL will also not return mutated user data that differs from the underlying schema
     {
-      name: 'populatedAuthors',
-      type: 'array',
+      name: "populatedAuthors",
+      type: "array",
       access: {
         update: () => false,
       },
@@ -184,12 +186,12 @@ export const Posts: CollectionConfig = {
       },
       fields: [
         {
-          name: 'id',
-          type: 'text',
+          name: "id",
+          type: "text",
         },
         {
-          name: 'name',
-          type: 'text',
+          name: "name",
+          type: "text",
         },
       ],
     },

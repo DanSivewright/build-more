@@ -6,7 +6,6 @@ import { CarouselOffset } from "@/payload/blocks/carousel-offset/config"
 import { HeroOverlap } from "@/payload/blocks/hero-overlap/config"
 import { TextHero } from "@/payload/blocks/text-hero/config"
 import { slugField } from "@/payload/fields/slug"
-import { hero } from "@/payload/heros/config"
 import {
   MetaDescriptionField,
   MetaImageField,
@@ -59,10 +58,6 @@ export const Pages: CollectionConfig = {
     {
       type: "tabs",
       tabs: [
-        {
-          fields: [hero],
-          label: "Hero",
-        },
         {
           fields: [
             {

@@ -1,7 +1,5 @@
 import { cache } from "react"
-import { notFound } from "next/navigation"
 import { RenderBlocks } from "@/payload/blocks/render-blocks"
-import { RenderHero } from "@/payload/heros/render-hero"
 
 import { createPage } from "@/lib/create-page"
 import { getCollection } from "@/lib/get-collection"
@@ -32,7 +30,6 @@ const { Page } = createPage({
     return (
       <article>
         <PayloadRedirects disableNotFound url={"/home"} />
-        <RenderHero {...hero} />
         <RenderBlocks blocks={layout} />
       </article>
     )
