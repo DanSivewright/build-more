@@ -10,7 +10,6 @@ import {
 
 import { CMSLink } from "@/components/cms-link"
 
-import { Media } from "../media"
 import { Title } from "../title"
 import {
   IS_BOLD,
@@ -115,17 +114,17 @@ export function serializeLexical({ nodes }: Props): JSX.Element {
             case "cta":
               return <CallToActionBlock key={index} {...block} />
             case "mediaBlock":
-              return (
-                <Media
-                  className="col-span-3 col-start-1"
-                  imgClassName="m-0"
-                  key={index}
-                  {...block}
-                  // captionClassName="mx-auto max-w-[48rem]"
-                  // enableGutter={false}
-                  // disableInnerContainer={true}
-                />
-              )
+              // @ts-ignore
+              return "TODO IMAGE"
+            // <Media
+            //   className="col-span-3 col-start-1"
+            //   imgClassName="m-0"
+            //   key={index}
+            //   {...block}
+            //   // captionClassName="mx-auto max-w-[48rem]"
+            //   // enableGutter={false}
+            //   // disableInnerContainer={true}
+            // />
             case "banner":
               return (
                 <BannerBlock
