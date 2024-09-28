@@ -10,6 +10,7 @@ import { ArchiveGridBlock } from "./archive-grid"
 import { ArchiveOffsetBlock } from "./archive-offset"
 import CallToActionImageOffset from "./call-to-action-image-offset"
 import CarouselOffsetBlock from "./carousel-offset"
+import HeroOverlapBlock from "./hero-overlap"
 import TextHero from "./text-hero"
 
 const blockComponents = {
@@ -23,6 +24,7 @@ const blockComponents = {
   "archive-offset": ArchiveOffsetBlock,
   "archive-grid": ArchiveGridBlock,
   "carousel-offset": CarouselOffsetBlock,
+  "hero-overlap": HeroOverlapBlock,
 }
 
 export const RenderBlocks: React.FC<{
@@ -44,6 +46,7 @@ export const RenderBlocks: React.FC<{
             if (Block) {
               return (
                 <div className="my-16" key={index}>
+                  {/* @ts-ignore */}
                   <Block {...block} />
                 </div>
               )

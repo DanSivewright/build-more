@@ -3,6 +3,7 @@ import { ArchiveGrid } from "@/payload/blocks/archive-grid/config"
 import { ArchiveOffset } from "@/payload/blocks/archive-offset/config"
 import { CallToActionImageOffset } from "@/payload/blocks/call-to-action-image-offset/config"
 import { CarouselOffset } from "@/payload/blocks/carousel-offset/config"
+import { HeroOverlap } from "@/payload/blocks/hero-overlap/config"
 import { TextHero } from "@/payload/blocks/text-hero/config"
 import { slugField } from "@/payload/fields/slug"
 import { hero } from "@/payload/heros/config"
@@ -79,6 +80,7 @@ export const Pages: CollectionConfig = {
                 Content,
                 MediaBlock,
                 FormBlock,
+                HeroOverlap,
               ],
               required: true,
             },

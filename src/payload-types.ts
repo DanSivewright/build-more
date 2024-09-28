@@ -111,6 +111,7 @@ export interface Page {
     | ContentBlock
     | MediaBlock
     | FormBlock
+    | HeroOverlapBlock
   )[];
   meta?: {
     title?: string | null;
@@ -779,6 +780,57 @@ export interface Form {
     | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "HeroOverlapBlock".
+ */
+export interface HeroOverlapBlock {
+  headingLines: {
+    text: string;
+    id?: string | null;
+  }[];
+  richText?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  links?:
+    | {
+        link: {
+          type?: ('reference' | 'custom') | null;
+          newTab?: boolean | null;
+          reference?:
+            | ({
+                relationTo: 'pages';
+                value: string | Page;
+              } | null)
+            | ({
+                relationTo: 'posts';
+                value: string | Post;
+              } | null);
+          url?: string | null;
+          label: string;
+          appearance?: ('default' | 'secondary') | null;
+          size?: ('xs' | 'sm' | 'md' | 'lg' | 'xl') | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  image: string | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'hero-overlap';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

@@ -27,7 +27,6 @@ import { Media } from "./payload/collections/media"
 import { Pages } from "./payload/collections/pages"
 import { Posts } from "./payload/collections/posts"
 import Users from "./payload/collections/users"
-import { seedHandler } from "./payload/endpoints/seedHandler"
 import { Footer } from "./payload/footer/config"
 import { Header } from "./payload/header/config"
 import { revalidateRedirects } from "./payload/hooks/revalidate-redirects"
@@ -121,15 +120,6 @@ export default buildConfig({
   collections: [Pages, Posts, Media, Categories, Users],
   cors: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ""].filter(Boolean),
   csrf: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ""].filter(Boolean),
-  endpoints: [
-    // The seed endpoint is used to populate the database with some example data
-    // You should delete this endpoint before deploying your site to production
-    {
-      handler: seedHandler,
-      method: "get",
-      path: "/seed",
-    },
-  ],
   globals: [Header, Footer],
   plugins: [
     redirectsPlugin({
